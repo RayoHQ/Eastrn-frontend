@@ -6,103 +6,105 @@ function RightSidebar({ isCollapsed, toggleSidebar, interactionMessage, searchRe
     const [width, setWidth] = useState(300); // Default width
     const [ellipsis, setEllipsis] = useState('');
     const [currentResultIndex, setCurrentResultIndex] = useState(0);
-  
+    const [showContent, setShowContent] = useState(false); // State to control visibility of content
+
     useEffect(() => {
         const interval = setInterval(() => setEllipsis((prev) => (prev.length < 3 ? prev + '.' : '')), 500);
         return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
+        // Show content only when there's an interaction message or search results
+        setShowContent(!!interactionMessage || searchResults.length > 0);
         setCurrentResultIndex(0); // Reset navigation index on new search
-      }, [searchResults]);
+    }, [interactionMessage, searchResults]);
 
-  const handleResize = (movementX) => {
-    if (!isCollapsed) setWidth((prevWidth) => Math.min(500, Math.max(150, prevWidth - movementX)));
-  };
+    const handleResize = (movementX) => {
+        if (!isCollapsed) setWidth((prevWidth) => Math.min(500, Math.max(150, prevWidth - movementX)));
+    };
 
-  const goToNextResult = () => {
-    if (currentResultIndex < searchResults.length - 1) {
-      const newIndex = currentResultIndex + 1;
-      setCurrentResultIndex(newIndex);
-      navigateToResult(searchResults[newIndex]);
-    }
-  };
+    const goToNextResult = () => {
+        if (currentResultIndex < searchResults.length - 1) {
+            const newIndex = currentResultIndex + 1;
+            setCurrentResultIndex(newIndex);
+            navigateToResult(searchResults[newIndex]);
+        }
+    };
 
-  const goToPreviousResult = () => {
-    if (currentResultIndex > 0) {
-      const newIndex = currentResultIndex - 1;
-      setCurrentResultIndex(newIndex);
-      navigateToResult(searchResults[newIndex]);
-    }
-  };
+    const goToPreviousResult = () => {
+        if (currentResultIndex > 0) {
+            const newIndex = currentResultIndex - 1;
+            setCurrentResultIndex(newIndex);
+            navigateToResult(searchResults[newIndex]);
+        }
+    };
 
-  // Function to handle bookmarking
-  const handleBookmark = () => {
-    alert("Bookmark added!"); // Replace with actual bookmark logic
-    // Implement bookmarking functionality here
-  };
+    // Function to handle bookmarking
+    const handleBookmark = () => {
+        alert("Bookmark added!"); // Replace with actual bookmark logic
+    };
 
-  // Function to handle sharing
-  const handleShare = () => {
-    alert("Share link copied!"); // Replace with actual sharing logic
-    // Implement sharing functionality here
-  };
+    // Function to handle sharing
+    const handleShare = () => {
+        alert("Share link copied!"); // Replace with actual sharing logic
+    };
 
-  return (
-    <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
-      <div
-        className={`sidebar right-sidebar ${isCollapsed ? 'collapsed' : ''}`}
-        style={{
-          width: isCollapsed ? '32px' : `${width}px`,
-          overflow: isCollapsed ? 'hidden' : 'auto',
-          position: 'relative',
-        }}
-      >
-        <button onClick={toggleSidebar} className="right-toggle-button">
-          <img src="/icons/Sidebar.svg" alt="Toggle Sidebar" width="20" />
-        </button>
-
-        {/* Icons appear beneath toggle button when collapsed */}
-        {isCollapsed && (
-          <div className="collapsed-icons">
-            <img src="/icons/Bookmark.svg" alt="Bookmark" className="icon-button" onClick={handleBookmark}/>
-            <img src="/icons/Share.svg" alt="Share" className="icon-button" onClick={handleShare}/>
-          </div>
-        )}
-
-        {/* Fixed icons container for expanded state */}
-        {!isCollapsed && (
-          <div className="pdf-icons" style={{ position: 'absolute', top: '12px', right: '15px' }}>
-            <img src="/icons/Bookmark.svg" alt="Bookmark" className="icon-button" onClick={handleBookmark}/>
-            <img src="/icons/Share.svg" alt="Share" className="icon-button" onClick={handleShare}/>
-          </div>
-        )}
-        
-        {!isCollapsed && (
-          <div style={{ padding: '10px' }}>
-            <p className="interact-text">
-              {interactionMessage}
-              {searchResults && ` ${ellipsis}`}
-            </p>
-            {searchResults && (
-              <div>
-                <p>Found {searchResults.length} results</p>
-                <button onClick={goToPreviousResult} disabled={currentResultIndex === 0}>
-                  Previous
+    return (
+        <div style={{ display: 'flex', flexDirection: 'row-reverse' }}>
+            <div
+                className={`sidebar right-sidebar ${isCollapsed ? 'collapsed' : ''}`}
+                style={{
+                    width: isCollapsed ? '32px' : `${width}px`,
+                    overflow: isCollapsed ? 'hidden' : 'auto',
+                    position: 'relative',
+                }}
+            >
+                <button onClick={toggleSidebar} className="right-toggle-button">
+                    <img src="/icons/Sidebar.svg" alt="Toggle Sidebar" width="20" />
                 </button>
-                <button onClick={goToNextResult} disabled={currentResultIndex === searchResults.length - 1}>
-                  Next
-                </button>
-              </div>
-            )}
+
+                {/* Icons appear beneath toggle button when collapsed */}
+                {isCollapsed && (
+                    <div className="collapsed-icons">
+                        <img src="/icons/Bookmark.svg" alt="Bookmark" className="icon-button" onClick={handleBookmark} />
+                        <img src="/icons/Share.svg" alt="Share" className="icon-button" onClick={handleShare} />
+                    </div>
+                )}
+
+                {/* Fixed icons container for expanded state */}
+                {!isCollapsed && (
+                    <div className="pdf-icons" style={{ position: 'absolute', top: '12px', right: '15px' }}>
+                        <img src="/icons/Bookmark.svg" alt="Bookmark" className="icon-button" onClick={handleBookmark} />
+                        <img src="/icons/Share.svg" alt="Share" className="icon-button" onClick={handleShare} />
+                    </div>
+                )}
+
+                {/* Show content only if there's an interaction message or search results */}
+                {!isCollapsed && showContent && (
+                    <div style={{ padding: '10px' }}>
+                        <p className="interact-text">
+                            {interactionMessage}
+                            {searchResults.length > 0 && ` ${ellipsis}`}
+                        </p>
+                        {searchResults.length > 0 && (
+                            <div>
+                                <p>Found {searchResults.length} results</p>
+                                <button onClick={goToPreviousResult} disabled={currentResultIndex === 0}>
+                                    Previous
+                                </button>
+                                <button onClick={goToNextResult} disabled={currentResultIndex === searchResults.length - 1}>
+                                    Next
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-        )}
-      </div>
 
-      {/* Resizable Divider */}
-      {!isCollapsed && <ResizableDivider onDrag={(movementX) => handleResize(movementX)} />}
-    </div>
-  );
+            {/* Resizable Divider */}
+            {!isCollapsed && <ResizableDivider onDrag={(movementX) => handleResize(movementX)} />}
+        </div>
+    );
 }
 
 export default RightSidebar;
