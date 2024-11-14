@@ -1,0 +1,144 @@
+/* General Sidebar Styles */
+.sidebar {
+    background-color: #1A1A1C;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    transition: width 0.3s ease;
+    overflow: hidden;
+    position: relative;
+  }
+
+/* Toggle Buttons Style */
+.left-toggle-button {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+  }
+
+.right-toggle-button {
+    position: absolute;
+    top: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+    font-size: 20px;
+}
+
+/* When the sidebar is not collapsed, position it on the left */
+.right-sidebar:not(.collapsed) .right-toggle-button {
+    left: 10px;
+  }
+
+/* Center the toggle button when sidebar is collapsed */
+.right-sidebar.collapsed .toggle-button {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+/* PDF Interaction Icon Styles */
+.pdf-icons {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    display: flex;
+    gap: 8px;
+}
+
+.pdf-icons img,
+.icon-button {
+    width: 21px; /* Set the desired icon size */
+    height: 16px;
+    flex-shrink: 0;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.collapsed-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 8px spacing between bookmark and share buttons */
+    position: absolute;
+    top: 41px; /* Positioning below the toggle button */
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Left Sidebar Default State */
+.left-sidebar {
+    width: 200px;
+    flex-shrink: 0;
+  }
+  
+/* Left Sidebar Collapsed State */
+.left-sidebar.collapsed {
+    width: 0px; /* Set width to 0 to collapse */
+    opacity: 0;
+    overflow: hidden; /* Prevents content overflow */
+    visibility: hidden;
+    transition: width 0.3s ease;
+  }
+
+/* Right Sidebar Default State */
+.right-sidebar {
+    width: 300px;
+    flex-shrink: 0;
+    transition: width 0.3s ease, opacity 0.3s ease;
+    position: relative;
+  }
+
+.interaction-section {
+    padding: 10px;
+}
+
+.interact-text {
+    margin-top: 60px;
+    padding-left: 17px;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.4px;
+}
+
+.ellipsis {
+  display: inline-block;
+  width: 1ch;
+  text-align: left;
+  /* Optional animation if you want to add a fade effect */
+}
+  
+/* Right Sidebar Collapsed State */
+.right-sidebar.collapsed {
+    width: 32;
+    overflow: hidden; /* Prevents content overflow, but divider stays visible */
+  }  
+  
+/* Divider Styles */
+.resizable-divider {
+    width: 0.1px;
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: ew-resize;
+    height: 100vh; /* Full height to align with sidebar */
+    position: relative; /* Adjust to ensure visibility */
+    z-index: 1;
+  }
+
+  .logo-container {
+    display: flex;
+    align-items: left; /* Center vertically */
+    left: 15px;
+    padding: 12.5px 0 10px 10px; /* Adjust padding as needed */
+  }
+  
+  .sidebar-logo {
+    max-width: 80px;
+    max-height: 16px; /* Control the size */
+    position: absolute;
+    left: 12.5px;
+  }
+  

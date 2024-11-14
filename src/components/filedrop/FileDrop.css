@@ -1,0 +1,14 @@
+.file-drop {
+    background-color: transparent !important;
+    width: 100%;
+    margin: 10px auto;
+    text-align: center;
+    color: #aaa;
+    cursor: pointer;
+  }
+  
+  .file-drop:hover {
+    background-color: transparent !important;
+    color: #7b7b7b;
+  }
+  
