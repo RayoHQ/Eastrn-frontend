@@ -110,3 +110,40 @@ body {
     padding: 10px;
   }
 }
+
+/* Add text layer styles */
+.textLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.textLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  opacity: 0.85;
+  z-index: 2; /* Ensure the text layer sits above the canvas */
+}
+
+.textLayer div {
+  position: absolute;
+  transform: scale(1);
+  transform-origin: 0 0;
+  white-space: pre;
+  color: transparent;
+  background: none;
+  cursor: text;
+  user-select: text;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+}
+
